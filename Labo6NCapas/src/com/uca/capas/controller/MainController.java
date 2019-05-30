@@ -1,6 +1,7 @@
 package com.uca.capas.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,27 +16,26 @@ import com.uca.capas.domain.Student;
 
 @Controller
 public class MainController {
-	
+
 	@Autowired
-	private StudentDAO studentDao;
+	private StudentDAO studentDAO;
 	
 	@RequestMapping("/")
-	public ModelAndView initMain(){
+	public ModelAndView initMain(@ModelAttribute Student student) {
 		ModelAndView mav = new ModelAndView();
 		List<Student> students = null;
 		try {
-		 students = studentDao.findAll();
-		}
-		catch(Exception e){
+			students = studentDAO.findAll();
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		mav.addObject("students",students);
+		mav.addObject("students", students);
 		mav.setViewName("main");
 		return mav;
 	}
 	
-	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView insert() {
+	@RequestMapping(value="/save")
+	public ModelAndView save() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("student", new Student());
 		mav.setViewName("form");
@@ -43,47 +43,34 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/formData")
-	public ModelAndView save(@ModelAttribute Student s) {
+	public ModelAndView formData(@ModelAttribute Student student) {
 		ModelAndView mav = new ModelAndView();
 		List<Student> students = null;
 		try {
-			studentDao.save(s, 1);
-		}catch(Exception e) {
-			
+			studentDAO.save(student, 1);
 		}
-		students = studentDao.findAll();
-		mav.addObject("students", students);
-		mav.setViewName("main");
-		return mav;
-	}
-	
-	@RequestMapping("/formStudent")
-	public ModelAndView initUser(){
-		ModelAndView mav = new ModelAndView();
-		Student student = new Student();
-		mav.addObject("students",student);
-		mav.setViewName("find");
-		return mav;
-	}
-	
-	@RequestMapping("/searchStudent")
-	public ModelAndView findOne(@RequestParam(value = "cStudent") Integer codigo){
-		ModelAndView mav = new ModelAndView();
-		Student student = null;
-		
-		try {
-			if(codigo == null) {
-				mav.addObject("message", "No hay ningun estudiante registrado con este codigo");
-			}else {
-				student = studentDao.findOne(codigo);
-				mav.addObject("students", student);
-			}
-		}catch(Exception e){
+		catch(Exception e) {
 			e.printStackTrace();
 		}
-		mav.setViewName("search");
+		students = studentDAO.findAll();
+		mav.addObject("student", students);
+		mav.setViewName("result");
 		return mav;
 	}
 	
-
+	@RequestMapping(value="/delete")
+	public ModelAndView delete(@RequestParam(value="cStudent") Integer code){
+		ModelAndView mav = new ModelAndView();
+		Student studentD = null;
+		try {
+			mav.addObject("message", "El estudiante fue eliminado con exito");
+			studentDAO.delete(code);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			mav.addObject("message", "El estudiante no pude ser eliminado");
+		}
+		mav.setViewName("result");
+		return mav;
+	}
 }

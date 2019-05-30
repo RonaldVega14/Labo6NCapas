@@ -5,33 +5,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SpringJPA</title>
+<title>Laboratorio 6 N Capas</title>
 </head>
 <body>
-
+	<h2>Usuarios</h2>
 	<table>
 		<tr>
-			<th>Name</th>
-			<th>Last Name</th>
-			<th>Age</th>
-			<th>Status</th>
+			<th>Codigo: </th>
+			<th>Name: </th>
+			<th>Apellido: </th>
+			<th>Age: </th>
+			<th>Estado: </th>
 		</tr>
-			<c:forEach items="${students}" var="students">
-				<tr>
-					<td>${students.sName}</td>
-					<td>${students.lName}</td>
-					<td>${students.sAge}</td>
-					<td>${students.activoDelegate}</td>
-				</tr>	
-			</c:forEach>
+		<c:forEach items="${students}" var="student">
+			<tr>
+				<td>${student.cStudent}</td>
+				<td>${student.sName}</td>
+				<td>${student.lName}</td>
+				<td>${student.sAge}</td>
+				<td>${student.activoDelegate}</td>
+			</tr>
+		</c:forEach>
 	</table>
-	
-	<form action="${pageContext.request.contextPath}/save" method = "post">
-	<input type="submit" value = "Agregar un nuevo usuario">
+	<h3>Insertar un usuario: </h3>
+	<form action="${pageContext.request.contextPath}/save" method="post">
+		<input type="submit" value="Agregar un nuevo usuario">
 	</form>
-	<br>
-	<form action="${pageContext.request.contextPath}/formStudent" method = "post">
-	<input type="submit" value = "Buscar un usuario">
+	
+	<h3>Eliminar un usuario</h3>
+	<form action="${pageContext.request.contextPath}/delete" method="post">
+		<label>Ingrese el nombre del estudiante que quiere eliminar: </label>
+		<input type="text" name="cStudent"/>
+		<input type="submit" value="Eliminar">
 	</form>
 </body>
 </html>

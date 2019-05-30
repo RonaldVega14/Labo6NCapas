@@ -5,25 +5,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Agregue un usuario</title>
+<meta charset="UTF-8">
+<title>Laboratorio 6 N Capas</title>
 </head>
 <body>
-	<form:form action = "${pageContext.request.contextPath}/formData" method = "POST" modelAttribute = "student">
-	<label>Ingrese su nombre: </label>
-	<form:input type = "text" name = "s_name" path = "sName"/><br>
-	
-	<label>Ingrese un apellido: </label>
-	<form:input type = "text" name = "s_lname" path = "lName"/><br>
-	
-	<label>Ingrese edad: </label>
-	<form:input type = "number" name = "s_age" path = "sAge"/><br>
-	
-	<label>Estado del estudiante</label>
-	<form:radiobutton name="status" path="bActivo" value ="true"/><label>Activo</label>
-	<form:radiobutton name="status" path="bActivo" value ="false"/><label>Inactivo</label>
-	
-	<input type = "submit" value = "Agregar estudiante">
-	</form:form>
+		<form:form action="${pageContext.request.contextPath}/formData" method="POST" modelAttribute="student">
+			<label>Ingrese un nombre: </label>
+			<form:input type="text" name="name" path="sName"/>
+			<br><br>
+			<label>Ingrese el apellido: </label>
+			<form:input type="text" name="lname" path="lName"/>
+			<br><br>
+			<label>Ingrese la edad: </label>
+			<form:input type="number" name="age" path="sAge"/>
+			<br><br>
+			<label>Estado del estudiante: </label>
+			<form:radiobutton name="status" path="bActivo" value="true"/><label>Activo</label>
+			<br>
+			<form:radiobutton name="status" path="bActivo" value="false"/><label>Inactivo</label>
+			<br><br>
+			
+			<input type="submit" onclick="window.location.href = ${pageContext.request.contextPath}/" value="Agregar estudiante">
+		</form:form>
 </body>
 </html>
